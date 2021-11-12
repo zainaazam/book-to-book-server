@@ -1,21 +1,23 @@
-import { MailerModule } from '@nestjs-modules/mailer';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
+import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
-import {
+import configuration, {
   Config,
   MongoConfig,
-  MailConfig,
   RedisConfig,
 } from './config/configuration';
+import { AccountModule } from './account/account.module';
+import { UploadModule } from './upload/upload.module';
+import { CodeModule } from './code/code.module';
 
 @Module({
   imports: [
-    // ConfigModule.forRoot({ load: [configuration] }),
+    ConfigModule.forRoot({ load: [configuration] }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService<Config>) => ({
@@ -31,8 +33,6 @@ import {
       inject: [ConfigService],
     }),
     GraphQLModule.forRootAsync({
-      // imports: [TokenModule],
-      // useFactory: (tokenService: TokenService) => {
       useFactory: () => {
         return {
           autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -45,14 +45,8 @@ import {
             'graphql-ws': true,
           },
           introspection: true,
-          context: async ({ req }) => {
-            // const token = req?.headers?.authorization?.split(' ').pop();
-            // const tokenData = await tokenService.findOneByToken(token);
-            // return { req: { ...req, data: tokenData } };
-          },
         };
       },
-      // inject: [TokenService],
     }),
     // MailerModule.forRootAsync({
     //   imports: [ConfigModule],
@@ -83,7 +77,10 @@ import {
       }),
       inject: [ConfigService],
     }),
+    AccountModule,
+    UploadModule,
+    CodeModule,
   ],
-  providers: [AppService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}

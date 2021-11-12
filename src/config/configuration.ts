@@ -6,6 +6,11 @@ export type MongoConfig = {
   password?: string;
 };
 
+export type ServerConfig = {
+  url: string;
+  port: number;
+};
+
 export type RedisConfig = {
   host: string;
   port: number;
@@ -39,6 +44,7 @@ export type FirebaseConfig = {
 };
 
 export type Config = {
+  server: ServerConfig;
   mongo: MongoConfig;
   redis: RedisConfig;
   mail: MailConfig;
@@ -46,8 +52,12 @@ export type Config = {
 };
 
 export default (): Config => ({
+  server: {
+    url: 'https://localhost:6400',
+    port: 6400,
+  },
   mongo: {
-    name: `book-to-book`,
+    name: `book2book`,
     url: 'localhost',
     port: 27017,
   },
