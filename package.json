@@ -6,8 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start": "vercel dev",
-    "deploy": "vercel deploy --prod",
+    "build": "nest build",
+    "start": "nest start",
+    "start:prod": "node dist/main",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
