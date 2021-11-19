@@ -27,10 +27,10 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: false,
-    httpsOptions: {
-      key: keyFile,
-      cert: certFile,
-    },
+    // httpsOptions: {
+    //   key: keyFile,
+    //   cert: certFile,
+    // },
   });
   const configService: ConfigService<Config> = app.get(ConfigService);
 
