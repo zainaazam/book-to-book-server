@@ -16,8 +16,8 @@ export class Account {
   @Prop()
   phone: string;
 
-  @Prop()
-  username: string;
+  // @Prop()
+  // username: string;
 
   @Prop()
   password: string;

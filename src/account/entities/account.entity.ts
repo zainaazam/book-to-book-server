@@ -15,8 +15,8 @@ export class Account {
   @Field(() => String)
   phone: string;
 
-  @Field(() => String)
-  username: string;
+  // @Field(() => String)
+  // username: string;
 
   @Field(() => String)
   password: string;
